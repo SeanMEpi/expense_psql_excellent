@@ -42,9 +42,28 @@ def view_expense_menu
 end
 
 def add_expense
+  puts "Expense name:"
+  name = gets.chomp.upcase
+  puts "Amount paid:"
+  amount = gets.chomp.to_f
+  puts "Date purchased (YYYY-MM-DD):"
+  date = gets.chomp
+  new_expense = Expense.new({:name => name, :amount => amount, :date => date})
+  new_expense.save
+  puts "#{name.capitalize} has been added!"
 end
 
 def view_all_expenses
+  results = Expense.all
+  puts "All Expenses:"
+  results.each do |result|
+    puts "Name: #{result.name}"
+    puts "Amount: #{result.amount}"
+    puts "Date: #{result.date}"
+    linespace
+  end
+  total = Expense.total_expenses
+  puts "Total Amount: #{total}"
 end
 
 def view_expenses_by_category
