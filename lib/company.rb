@@ -24,4 +24,17 @@ class Company
     self.name == another_company.name
   end
 
+  def update_companies_expenses(expense_id)
+    DB.exec("INSERT INTO companies_expenses (company_id, expense_id) VALUES (#{@id}, #{expense_id});")
+  end
+
+  def self.select_expenses_by_company(company_id)
+    expenses = []
+    results = DB.exec("SELECT expenses.* FROM companies JOIN companies_expenses ON (companies.id = companies_expenses.company_id) JOIN expenses ON (companies_expenses.expense_id = expenses.id) WHERE companies.id = #{company_id};")
+    results.each do |result|
+      expenses << Expense.new({:id => result['id'].to_i, :name => result['name'], :amount => result['amount'].to_f, :date => result['date']})
+    end
+    expenses
+
+  end
 end
