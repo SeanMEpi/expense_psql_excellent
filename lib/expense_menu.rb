@@ -54,6 +54,9 @@ def add_expense
   puts "What category does this purchase belong to?"
   category = Category.find_category(gets.chomp.upcase)
   category.update_expenses_categories(new_expense.id)
+  puts "What company was this purchased from?"
+  company = Company.find_company(gets.chomp.upcase)
+  company.update_companies_expenses(new_expense.id)
   puts "Fantastic!"
 end
 
@@ -85,7 +88,21 @@ end
 
 
 def view_expenses_by_company_within_category
-
+  puts "Enter category to search:"
+  category = gets.chomp.upcase
+  puts "Enter company to search:"
+  company = gets.chomp.upcase
+  category_id = Category.find_category_id(category)
+  company_id = Company.find_company(company)
+  category_expenses = Category.select_expenses_by_category(category_id)
+  company_expenses = Company.select_expenses_by_company(company_id.id)
+  results = Company.expenses_by_category_by_company(category_expenses, company_expenses)
+  results.each do |result|
+    puts "Expense: #{result.name}"
+    puts "Amount: #{result.amount}"
+    puts "Date: #{result.date}"
+  end
+  linespace
 end
 
 

@@ -35,6 +35,28 @@ class Company
       expenses << Expense.new({:id => result['id'].to_i, :name => result['name'], :amount => result['amount'].to_f, :date => result['date']})
     end
     expenses
+  end
 
+  def self.expenses_by_category_by_company(category_expenses, company_expenses)
+    filtered_expenses = []
+    category_expenses.each do |cat_expense|
+      company_expenses.each do |com_expense|
+        if cat_expense.name == com_expense.name
+          filtered_expenses << cat_expense
+        end
+      end
+    end
+    filtered_expenses
+  end
+
+  def self.find_company(company_name)
+    result = []
+    companies = Company.all
+    companies.each do |company|
+      if company.name == company_name
+        result << company
+      end
+    end
+    result.first
   end
 end

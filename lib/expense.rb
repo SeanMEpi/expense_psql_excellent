@@ -50,19 +50,6 @@ class Expense
     (self.amount_by_category(category_id) / self.total_expenses) * 100
   end
 
-  def self.amount_by_category(category_id)
-    total = 0
-    expenses = Category.select_expenses_by_category(category_id)
-    expenses.each do |expense|
-      total += expense.amount
-    end
-    total
-  end
-
-  def self.percentage_of_total(category_id)
-    (self.amount_by_category(category_id) / self.total_expenses) * 100
-  end
-
   def self.amount_by_company(company_id)
     total = 0
     expenses = Company.select_expenses_by_company(company_id)

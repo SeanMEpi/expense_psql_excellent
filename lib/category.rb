@@ -37,7 +37,7 @@ class Category
     expenses
   end
 
-    def self.find_category(category_name)
+  def self.find_category(category_name)
     result = []
     categories = Category.all
     categories.each do |category|
@@ -45,7 +45,7 @@ class Category
         result << category
       end
     end
-    result.first
+    result
   end
 
   def self.find_category_id(category_name)
