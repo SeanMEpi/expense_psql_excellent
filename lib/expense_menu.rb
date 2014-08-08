@@ -80,6 +80,7 @@ def view_expenses_by_category
 end
 
 def view_expenses_by_company_within_category
+
 end
 
 
