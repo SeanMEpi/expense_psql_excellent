@@ -46,7 +46,6 @@ describe 'Category' do
       new_expense2.save
       new_category.update_expenses_categories(new_expense.id)
       new_category.update_expenses_categories(new_expense2.id)
-      binding.pry
       expect(Category.select_expenses_by_category(new_category.id)).to eq [new_expense, new_expense2]
     end
   end

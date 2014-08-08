@@ -35,4 +35,33 @@ describe 'Expense' do
       expect(new_expense.==(new_expense2)).to eq true
     end
   end
+
+  describe 'total_expenses' do
+    it 'returns the total amount spent for all categories' do
+       new_expense = Expense.new({:name => "Clothes", :amount => 10.00, :date => '1999-12-31'})
+      new_expense.save
+      new_expense2 = Expense.new({:name => "Stuff", :amount => 20.00, :date => '1999-12-30'})
+      new_expense2.save
+      expect(Expense.total_expenses).to eq 30.00
+    end
+  end
+
+  describe 'amount_by_category' do
+    it 'returns total expense amount for a category' do
+      new_expense = Expense.new({:name => "Clothes", :amount => 10.00, :date => '1999-12-31'})
+      new_expense.save
+      new_expense2 = Expense.new({:name => "Shoes", :amount => 50.00, :date => '1999-12-31'})
+      new_expense2.save
+      new_expense3 = Expense.new({:name => "Beer", :amount => 200.00, :date => '1999-12-31'})
+      new_expense3.save
+      new_category = Category.new({:name => "Apparel"})
+      new_category.save
+      new_category2 = Category.new({:name => "Party Supplies"})
+      new_category2.save
+      new_category.update_expenses_categories(new_expense.id)
+      new_category.update_expenses_categories(new_expense2.id)
+      new_category2.update_expenses_categories(new_expense3.id)
+      expect(Expense.amount_by_category(new_category.id)).to eq 60.00
+    end
+  end
 end

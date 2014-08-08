@@ -28,7 +28,27 @@ class Expense
     self.date == another_expense.date
   end
 
+  def self.total_expenses
+    total = 0
+    expenses = self.all
+    expenses.each do |expense|
+      total += expense.amount
+    end
+    total
+  end
 
+  def self.amount_by_category(category_id)
+    total = 0
+    expenses = Category.select_expenses_by_category(category_id)
+    expenses.each do |expense|
+      total += expense.amount
+    end
+    total
+  end
+
+  def percentage_of_total
+
+  end
 
 
 
