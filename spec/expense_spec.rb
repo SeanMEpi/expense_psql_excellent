@@ -83,4 +83,56 @@ describe 'Expense' do
       expect(Expense.percentage_of_total(new_category.id)).to eq 60
     end
   end
+
+  describe '.amount_by_company' do
+    it 'returns total expense amount for a company within a category' do
+      new_expense = Expense.new({:name => "Clothes", :amount => 10.00, :date => '1999-12-31'})
+      new_expense.save
+      new_expense2 = Expense.new({:name => "Shoes", :amount => 50.00, :date => '1999-12-31'})
+      new_expense2.save
+      new_expense3 = Expense.new({:name => "Beer", :amount => 200.00, :date => '1999-12-31'})
+      new_expense3.save
+      new_category = Category.new({:name => "Apparel"})
+      new_category.save
+      new_category2 = Category.new({:name => "Party Supplies"})
+      new_category2.save
+      new_category.update_expenses_categories(new_expense.id)
+      new_category.update_expenses_categories(new_expense2.id)
+      new_category2.update_expenses_categories(new_expense3.id)
+      new_company = Company.new({:name => "Nike"})
+      new_company.save
+      new_company2 = Company.new({:name => "Safeway"})
+      new_company2.save
+      new_company.update_companies_expenses(new_expense2.id)
+      new_company2.update_companies_expenses(new_expense.id)
+      new_company2.update_companies_expenses(new_expense3.id)
+      expect(Expense.amount_by_company(new_company.id)).to eq 50.00
+    end
+  end
+
+  describe '.companies_percentage_of_total' do
+    it 'returns total expense amount for a company within a category' do
+      new_expense = Expense.new({:name => "Clothes", :amount => 10.00, :date => '1999-12-31'})
+      new_expense.save
+      new_expense2 = Expense.new({:name => "Shoes", :amount => 50.00, :date => '1999-12-31'})
+      new_expense2.save
+      new_expense3 = Expense.new({:name => "Beer", :amount => 200.00, :date => '1999-12-31'})
+      new_expense3.save
+      new_category = Category.new({:name => "Apparel"})
+      new_category.save
+      new_category2 = Category.new({:name => "Party Supplies"})
+      new_category2.save
+      new_category.update_expenses_categories(new_expense.id)
+      new_category.update_expenses_categories(new_expense2.id)
+      new_category2.update_expenses_categories(new_expense3.id)
+      new_company = Company.new({:name => "Nike"})
+      new_company.save
+      new_company2 = Company.new({:name => "Safeway"})
+      new_company2.save
+      new_company.update_companies_expenses(new_expense2.id)
+      new_company2.update_companies_expenses(new_expense.id)
+      new_company2.update_companies_expenses(new_expense3.id)
+      expect(Expense.companies_percentage_of_total(new_company.id, new_category.id)).to eq (50.00/60.00)*100
+    end
+  end
 end
