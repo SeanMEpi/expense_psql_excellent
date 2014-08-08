@@ -67,6 +67,16 @@ def view_all_expenses
 end
 
 def view_expenses_by_category
+  puts "Enter category to search:"
+  category = gets.chomp.upcase
+  category_id = Category.find_category_id(category)
+  results = Category.select_expenses_by_category(category_id)
+  results.each do |result|
+    puts "Expense: #{result.name}"
+    puts "Amount: #{result.amount}"
+    puts "Date: #{result.date}"
+  end
+  linespace
 end
 
 def view_expenses_by_company_within_category
