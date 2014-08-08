@@ -37,6 +37,17 @@ class Category
     expenses
   end
 
+    def self.find_category(category_name)
+    result = []
+    categories = Category.all
+    categories.each do |category|
+      if category.name == category_name
+        result << category
+      end
+    end
+    result.first
+  end
+
   def self.find_category_id(category_name)
     result = 0
     categories = Category.all

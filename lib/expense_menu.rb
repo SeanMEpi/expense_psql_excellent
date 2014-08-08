@@ -51,6 +51,10 @@ def add_expense
   new_expense = Expense.new({:name => name, :amount => amount, :date => date})
   new_expense.save
   puts "#{name.capitalize} has been added!"
+  puts "What category does this purchase belong to?"
+  category = Category.find_category(gets.chomp.upcase)
+  category.update_expenses_categories(new_expense.id)
+  puts "Fantastic!"
 end
 
 def view_all_expenses
@@ -78,6 +82,7 @@ def view_expenses_by_category
   end
   linespace
 end
+
 
 def view_expenses_by_company_within_category
 
