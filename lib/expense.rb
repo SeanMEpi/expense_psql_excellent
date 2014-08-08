@@ -46,8 +46,8 @@ class Expense
     total
   end
 
-  def percentage_of_total
-
+  def self.percentage_of_total(category_id)
+    (self.amount_by_category(category_id) / self.total_expenses) * 100
   end
 
 
