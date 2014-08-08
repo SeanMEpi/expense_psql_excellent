@@ -24,8 +24,18 @@ class Category
     self.name == another_category.name
   end
 
+  def update_expenses_categories(expense_id)
+    DB.exec("INSERT INTO expenses_categories (expense_id,category_id) VALUES (#{expense_id},#{@id});")
+  end
 
-
+  def self.select_expenses_by_category(category_id)
+    expenses = []
+    results = DB.exec("SELECT expenses.* FROM categories JOIN expenses_categories ON (categories.id = expenses_categories.category_id) JOIN expenses ON (expenses_categories.expense_id = expenses.id) WHERE categories.id = #{category_id};")
+    results.each do |result|
+      expenses << Expense.new({:id => result['id'].to_i, :name => result['name'], :amount => result['amount'].to_f, :date => result['date']})
+    end
+    expenses
+  end
 
 
 end

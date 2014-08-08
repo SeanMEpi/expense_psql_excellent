@@ -11,5 +11,6 @@ RSpec.configure do |config|
   config.before(:each) do
     DB.exec("DELETE FROM expenses *;")
     DB.exec("DELETE FROM categories *;")
+    DB.exec("DELETE FROM expenses_categories *;")
   end
 end
